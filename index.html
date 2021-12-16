@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>"Hangman by Oksana"</title>
+</head>
+
+<body>
+  <h1>"Hangman"</h1>
+
+  <script>
+    var words = ["pillow",
+      "letter",
+      "carrot",
+      "winter",
+      "summer",
+      "monkey",
+      "family"
+    ];
+    var word = words[Math.floor(Math.random() * words.length)];
+    var answerArray = [];
+    var guess = null;
+    var counter = 0;
+    var attempt = 10;
+
+    for (var i = 0; i < word.length; i++) {
+      answerArray[i] = "_";
+    }
+
+    var remainingLetters = word.length;
+
+    while (remainingLetters > 0) {
+      if (counter == 0) {
+        alert("Let's play the game! Guess which word is it: \n" + answerArray.join(" "));
+      } else if (counter >= attempt) {
+        alert("You have no more tries left. Press F5 to play again.");
+        break;
+      } else {
+        alert("Try one more time: \n" + answerArray.join(" "));
+      }
+
+      guess = prompt("Guess a letter, or click Cancel to stop playing.");
+
+      if (guess === null) {
+        alert("See you next time!");
+        break;
+      } else if (guess.length !== 1) {
+        alert("Please enter a single letter.");
+      } else {
+        for (var j = 0; j < word.length; j++) {
+          if (word[j] === guess.toLowerCase() && (answerArray[j] === "_" || word[j] !== answerArray[j])) {
+            answerArray[j] = word[j];
+            remainingLetters--;
+          }
+        }
+      }
+      counter++;
+    }
+
+    if (guess !== null && counter < attempt) {
+      alert(answerArray.join(" "));
+      alert("Good job! The answer was " + word);
+    }
+
+  </script>
+</body>
+
+</html>
